@@ -22,8 +22,9 @@ class LinearLayer:
             bias : the bias value for the neurons in the layer
             m : the number of neurons in the layer
         """
+        self.m = m
         self.neurons = []
-        for _ in range(m):
+        for _ in range(self.m):
             self.neurons.append(Neuron(num_inputs, bias))
 
     def forward(self, inputs):
@@ -37,9 +38,9 @@ class LinearLayer:
             A numpy matrix with shape m x 1, where m is the number of neurons on the layer,
             with each index being the output from that node
         """
-        ret = np.zeros((len(self.neurons), 1))
+        ret = np.zeros((self.m, 1))
 
-        for i in range(len(self.neurons)):
+        for i in range(self.m):
             ret[i] = self.neurons[i].forward(inputs)
 
         return ret

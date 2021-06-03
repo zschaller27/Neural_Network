@@ -1,6 +1,7 @@
 import numpy as np
 
 from layers import *
+from activations import *
 
 class LinearNeuralNetwork:
     """
@@ -11,7 +12,7 @@ class LinearNeuralNetwork:
         hidden_layers : A set of 'l' layers made up of 'm' neurons.
     """
 
-    def __init__(self, num_inputs, l, m, o):
+    def __init__(self, num_inputs, l, m, o, a):
         """
         Initialize the network with 'l' hidden layers (including the input layer) each layer having 'm'
         neurons. The output layer has 'o' neurons. By default this uses MSE loss.
@@ -21,6 +22,7 @@ class LinearNeuralNetwork:
             l : the number of hidden layers to make.
             m : the number of neurons per layer.
             o : the number of neurons on the output layer.
+            a : the activation function to use for all hidden layers
         """
         # Verify that the numbers given are valid
         assert l > 0
@@ -41,6 +43,8 @@ class LinearNeuralNetwork:
         # Add the output layer
         self.hidden_layers.append(LinearLayer(m, 1, o))
 
+        self.activation = a
+
     def forward(self, input):
         """
         Provides an output numpy matrix from the layer for a give set of inputs.
@@ -59,9 +63,8 @@ class LinearNeuralNetwork:
         x = input
         for i in range(len(self.hidden_layers)):
             x = self.hidden_layers[i].forward(x)
+            x = self.activation.forward(x)
         return x
-
-# TODO: Write a modular train function that can train any network structure with a given test data set
 
 if __name__ == "__main__":
     """
@@ -70,7 +73,7 @@ if __name__ == "__main__":
 
     test_inputs = np.array([[2], [1]])
 
-    ## Test NeuralNet Class Implementation ##
-    print("Testing Neural Net")
-    test_network = LinearNeuralNetwork(2, 1, 2, 1)
+    ## Test LinearNeuralNetwork Class Implementation ##
+    print("Testing LinearNeuralNetwork")
+    test_network = LinearNeuralNetwork(2, 1, 2, 1, sigmoid())
     print(test_network.forward(test_inputs))
