@@ -20,7 +20,7 @@ class Neuron:
             num_inputs : the number of input values into the neuron.
             b : The given bias value to use for this neuron.
         """
-        self.weights = np.zeros_like(None, shape=(num_inputs, 1))
+        self.weights = np.random.rand(num_inputs, 1)
         self.bias = b
         
     def forward(self, inputs):

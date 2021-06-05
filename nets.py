@@ -66,6 +66,22 @@ class LinearNeuralNetwork:
             x = self.activation.forward(x)
         return x
 
+def printWeights(net):
+    # Go through each hidden layer
+    for i_layer in range(net.n):
+        print("Layer %d:" %i_layer)
+
+        # Go through each neuron in the layer
+        for i_neuron in range(net.hidden_layers[i_layer].m):
+            print("\tNeuron %d:" %i_neuron)
+            
+            # Once again iterate through the weights changing them by the step_size
+            # both positive and negative. Choosing the value which creates the smaller
+            # loss.
+            for i_weight in range(len(net.hidden_layers[i_layer].neurons[i_neuron].weights)):
+                print("\t\t%d: %1.5f" %(i_weight, \
+                    net.hidden_layers[i_layer].neurons[i_neuron].weights[i_weight]))
+
 if __name__ == "__main__":
     """
     If this file is being run individually test the implementation of neural net classes.
